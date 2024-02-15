@@ -1,0 +1,6 @@
+ALTER TABLE `postdb`.`emsrate` 
+CHANGE COLUMN `minweight` `minweight` INT NOT NULL ,
+CHANGE COLUMN `maxweight` `maxweight` INT NOT NULL ,
+CHANGE COLUMN `emsprice` `emsprice` INT NOT NULL DEFAULT 0 ,
+ADD PRIMARY KEY (`minweight`, `maxweight`);
+;
