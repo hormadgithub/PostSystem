@@ -347,7 +347,9 @@ On Error Resume Next
           Set dbActive = New Adodb.Connection
           Set dbSQL = New Adodb.Connection
 
-        strConnectionDB = "Driver={MySQL ODBC 3.51 Driver};Server=localhost;Database=PostSystem;user=Nittaya;Password=123;"
+        'strConnectionDB = "Driver={MySQL ODBC 3.51 Driver};Server=localhost;Database=PostSystem;user=root;Password=;"
+      '  strConnectionDB = "Driver={MySQL ODBC 3.51 Driver};Server=localhost;Database=PostSystem;user=Nittaya;Password=123;"
+        strConnectionDB = "Driver={MySQL ODBC 8.0 Unicode Driver};Server=localhost:3300;Database=Postdb;user=root;Password=;"
         'strConnectionDB = "Driver={MySQL ODBC 5.1 Driver};Server=localhost;Database=PostSystem;user=Nittaya;Password=123;"
 
         dbSQL.ConnectionString = strConnectionDB
@@ -2397,9 +2399,9 @@ Public Function DGetKeyOfTable(rsSend As Recordset) As String
                 DGetKeyOfTable = ""
                 Select Case UCase(tbActive)
                             Case "INVOICE"
-                                            DGetKeyOfTable = "INVNO='" & Trim(rsSend!Invno) & "'"
+                                            DGetKeyOfTable = "INVNO='" & Trim(rsSend!invno) & "'"
                             Case "INVOICEDETAIL"
-                                            DGetKeyOfTable = "INVNO='" & Trim(rsSend!Invno) & "' and Invdt_item=" & Trim(rsSend!invdt_item)
+                                            DGetKeyOfTable = "INVNO='" & Trim(rsSend!invno) & "' and Invdt_item=" & Trim(rsSend!invdt_item)
                             Case "CUSTOMER"
                                             DGetKeyOfTable = "CSCODE='" & Trim(rsSend!CsCode) & "'"
                             Case "EMSRATE", "REGSERVICE"
@@ -2466,9 +2468,9 @@ On Error Resume Next
                 DGetKeyToSelect = ""
                 Select Case UCase(tbActive)
                             Case "INVOICE"
-                                            DGetKeyToSelect = "INVNO='" & Trim(rsSend!Invno) & "'"
+                                            DGetKeyToSelect = "INVNO='" & Trim(rsSend!invno) & "'"
                             Case "INVOICEDETAIL"
-                                            DGetKeyToSelect = "INVNO='" & Trim(rsSend!Invno) & "' and Invdt_item=" & Trim(rsSend!invdt_item)
+                                            DGetKeyToSelect = "INVNO='" & Trim(rsSend!invno) & "' and Invdt_item=" & Trim(rsSend!invdt_item)
                             Case "CUSTOMER"
                                             DGetKeyToSelect = "CSCODE='" & Trim(rsSend!CsCode) & "'"
                             Case "EMSRATE", "REGSERVICE"
@@ -3258,7 +3260,7 @@ strCmdSQL = "select  *  from " & tbActive
 
         Select Case UCase(tbActive)
                       Case "INVOICEDETAIL"
-                        Find_strCmdSQLForBrowse = strCmdSQL & " where Invno='" & Trim(rsBrowse!Invno) & "'"
+                        Find_strCmdSQLForBrowse = strCmdSQL & " where Invno='" & Trim(rsBrowse!invno) & "'"
          Case Else
                         Find_strCmdSQLForBrowse = strCmdSQL
          End Select

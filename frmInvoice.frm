@@ -148,7 +148,7 @@ Begin VB.Form frmInvoice
          EndProperty
          CalendarBackColor=   -2147483624
          CustomFormat    =   "dd/mm/yyyy"
-         Format          =   154730497
+         Format          =   124911617
          CurrentDate     =   36949
       End
       Begin VB.Label lblCSName 
@@ -444,6 +444,10 @@ Private Sub Form_Unload(Cancel As Integer)
     Call Cancel_Rec
 End Sub
 
+
+Private Sub OLE1_Updated(Code As Integer)
+
+End Sub
 
 Private Sub tbrSave_ButtonClick(ByVal Button As MSComctlLib.Button)
 Select Case UCase(Button.Key)

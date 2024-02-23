@@ -1357,6 +1357,7 @@ End Sub
 Public Sub tbrCommand_ButtonClick(ByVal Button As MSComctlLib.Button)
 Dim strSchItemOver7 As String
 Dim strHasContract As String
+Dim ConnectionString As String
         
         mode = Button.Key
         Select Case Trim(UCase(mode))
@@ -1365,33 +1366,20 @@ Dim strHasContract As String
                                     Screen.MousePointer = vbHourglass
                                     With crptInvoice
                                            ' .Connect = "Provider=SQLNCLI10.1;Persist Security Info=False;User ID=alluser;PWD=alluser;Initial Catalog=" & CurrentDB & ";Data Source=" & CurrentServer
-                                            .Connect = "DSN = PostSystem;UID = Nittaya;PWD=123;DSQ=PostSystem"
+                                            '.Connect = "DSN = DILFx;UID = Nittaya;PWD=123;DSQ=PostSystem"
                                             '.LogOnServer "PDSODBC.DLL", "PostSystem", "PostSystem", "Nittaya", "123"
+                                           ' .Connect = "DRIVER={MySQL ODBC 3.51 Driver};SERVER=localhost;DATABASE=PostSystem;UID=Nittaya;PWD=1233"
+
+                                            .Connect = "Driver={MySQL ODBC 8.0 Unicode Driver};Server=localhost:3300;Database=Postdb;user=root;Password=;"
+                                                                 
+
                                             .ReportFileName = RptPath & "rptInvoice.rpt"
                                             .ParameterFields(1) = "เลขที่ Invoice;" & rsBrowse!invno & ";true"
                                             .PrintReport
                                     End With
                                     Screen.MousePointer = vbDefault
                                     Exit Sub
-                        ElseIf lblTbActive = "EMSRATE" Then
-                                    '30-04-2020 ทำการตรวจสอบว่าเป็นการเข้าไปเกินครั้งที่ 7 แล้วหรือไม่
-                                     If Trim(rsBrowse!WKNotCntContract) <> "Y" And Count_Record("Scheduletime", "CTno='" & Trim(rsBrowse!CTNO) & "' and item>7 ") <> 0 And Count_Record("Scheduletime", "CTno='" & Trim(rsBrowse!CTNO) & "' and item=7 and  SchEdate is not null ") <> 0 Then
-                                        strSchItemOver7 = "Y"
-                                    Else
-                                        strSchItemOver7 = "N"
-                                    End If
-
-                                    Screen.MousePointer = vbHourglass
-                                    With crptWKChecklist
-                                            .Connect = "Provider=SQLNCLI10.1;Persist Security Info=False;User ID=alluser;PWD=alluser;Initial Catalog=" & CurrentDB & ";Data Source=" & CurrentServer
-                                             .ReportFileName = RptPath & "rptWkChecklist.rpt"
-                                            .ParameterFields(1) = "WKNo;" & rsBrowse!WKno & ";true"
-                                            .ParameterFields(2) = "SchItemOver7;" & strSchItemOver7 & ";true"
-                                            .PrintReport
-                                    End With
-                                    Screen.MousePointer = vbDefault
-                                    Exit Sub
-                        End If
+                       End If
                              
                 Case "CRITERIA"
                               If tbActive <> "INVOICE" Then
