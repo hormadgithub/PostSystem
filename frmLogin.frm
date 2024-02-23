@@ -5,6 +5,7 @@ Begin VB.Form frmLogin
    ClientLeft      =   120
    ClientTop       =   465
    ClientWidth     =   4560
+   Icon            =   "frmLogin.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
@@ -40,7 +41,7 @@ Begin VB.Form frmLogin
    Begin VB.Image imgHandPoint 
       Height          =   480
       Left            =   3345
-      Picture         =   "frmLogin.frx":0000
+      Picture         =   "frmLogin.frx":094A
       Top             =   1230
       Visible         =   0   'False
       Width           =   480

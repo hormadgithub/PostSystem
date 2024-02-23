@@ -11,6 +11,7 @@ Begin VB.Form frmPostSystem
    ClientTop       =   0
    ClientWidth     =   12675
    ControlBox      =   0   'False
+   Icon            =   "frmPostSystem.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
@@ -415,27 +416,27 @@ Begin VB.Form frmPostSystem
          BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
             NumListImages   =   6
             BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":0000
+               Picture         =   "frmPostSystem.frx":000C
                Key             =   "ADD"
             EndProperty
             BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":0400
+               Picture         =   "frmPostSystem.frx":040C
                Key             =   "EDIT"
             EndProperty
             BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":082A
+               Picture         =   "frmPostSystem.frx":0836
                Key             =   "DELETE"
             EndProperty
             BeginProperty ListImage4 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":0C93
+               Picture         =   "frmPostSystem.frx":0C9F
                Key             =   "REFRESH"
             EndProperty
             BeginProperty ListImage5 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":10A1
+               Picture         =   "frmPostSystem.frx":10AD
                Key             =   "CRITERIA"
             EndProperty
             BeginProperty ListImage6 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":1DD1
+               Picture         =   "frmPostSystem.frx":1DDD
                Key             =   "PRINT"
             EndProperty
          EndProperty
@@ -453,27 +454,27 @@ Begin VB.Form frmPostSystem
          BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
             NumListImages   =   6
             BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":3053
+               Picture         =   "frmPostSystem.frx":305F
                Key             =   "ADD"
             EndProperty
             BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":342D
+               Picture         =   "frmPostSystem.frx":3439
                Key             =   "EDIT"
             EndProperty
             BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":3898
+               Picture         =   "frmPostSystem.frx":38A4
                Key             =   "DELETE"
             EndProperty
             BeginProperty ListImage4 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":3D4E
+               Picture         =   "frmPostSystem.frx":3D5A
                Key             =   "REFRESH"
             EndProperty
             BeginProperty ListImage5 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":41DF
+               Picture         =   "frmPostSystem.frx":41EB
                Key             =   "CRITERIA"
             EndProperty
             BeginProperty ListImage6 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":4F7F
+               Picture         =   "frmPostSystem.frx":4F8B
                Key             =   "PRINT"
             EndProperty
          EndProperty
@@ -491,27 +492,27 @@ Begin VB.Form frmPostSystem
          BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
             NumListImages   =   6
             BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":5859
+               Picture         =   "frmPostSystem.frx":5865
                Key             =   "ADD"
             EndProperty
             BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":5B7E
+               Picture         =   "frmPostSystem.frx":5B8A
                Key             =   "EDIT"
             EndProperty
             BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":5F26
+               Picture         =   "frmPostSystem.frx":5F32
                Key             =   "DELETE"
             EndProperty
             BeginProperty ListImage4 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":62BF
+               Picture         =   "frmPostSystem.frx":62CB
                Key             =   "REFRESH"
             EndProperty
             BeginProperty ListImage5 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":6666
+               Picture         =   "frmPostSystem.frx":6672
                Key             =   "CRITERIA"
             EndProperty
             BeginProperty ListImage6 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":7219
+               Picture         =   "frmPostSystem.frx":7225
                Key             =   "PRINT"
             EndProperty
          EndProperty
@@ -529,15 +530,15 @@ Begin VB.Form frmPostSystem
          BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
             NumListImages   =   3
             BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":7AF3
+               Picture         =   "frmPostSystem.frx":7AFF
                Key             =   "SAVE"
             EndProperty
             BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":80DF
+               Picture         =   "frmPostSystem.frx":80EB
                Key             =   "CLOSE"
             EndProperty
             BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":8676
+               Picture         =   "frmPostSystem.frx":8682
                Key             =   ""
             EndProperty
          EndProperty
@@ -555,15 +556,15 @@ Begin VB.Form frmPostSystem
          BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
             NumListImages   =   3
             BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":8D88
+               Picture         =   "frmPostSystem.frx":8D94
                Key             =   "SAVE"
             EndProperty
             BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":92B6
+               Picture         =   "frmPostSystem.frx":92C2
                Key             =   "CLOSE"
             EndProperty
             BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":9721
+               Picture         =   "frmPostSystem.frx":972D
                Key             =   ""
             EndProperty
          EndProperty
@@ -581,15 +582,15 @@ Begin VB.Form frmPostSystem
          BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
             NumListImages   =   3
             BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":9DB3
+               Picture         =   "frmPostSystem.frx":9DBF
                Key             =   "SAVE"
             EndProperty
             BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":A326
+               Picture         =   "frmPostSystem.frx":A332
                Key             =   "CLOSE"
             EndProperty
             BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPostSystem.frx":A7F2
+               Picture         =   "frmPostSystem.frx":A7FE
                Key             =   ""
             EndProperty
          EndProperty
@@ -620,28 +621,28 @@ Begin VB.Form frmPostSystem
          BackColor       =   -2147483626
          ForeColor       =   8388608
          TabCaption(0)   =   "รายการ"
-         TabPicture(0)   =   "frmPostSystem.frx":AF04
+         TabPicture(0)   =   "frmPostSystem.frx":AF10
          Tab(0).ControlEnabled=   0   'False
          Tab(0).Control(0)=   "dgDetail1"
          Tab(0).ControlCount=   1
          TabCaption(1)   =   "ลูกค้า"
-         TabPicture(1)   =   "frmPostSystem.frx":AF20
+         TabPicture(1)   =   "frmPostSystem.frx":AF2C
          Tab(1).ControlEnabled=   -1  'True
          Tab(1).Control(0)=   "dgDetail2"
          Tab(1).Control(0).Enabled=   0   'False
          Tab(1).ControlCount=   1
          TabCaption(2)   =   "---EMS---"
-         TabPicture(2)   =   "frmPostSystem.frx":AF3C
+         TabPicture(2)   =   "frmPostSystem.frx":AF48
          Tab(2).ControlEnabled=   0   'False
          Tab(2).Control(0)=   "dgDetail3"
          Tab(2).ControlCount=   1
          TabCaption(3)   =   "ลงทะเบียน"
-         TabPicture(3)   =   "frmPostSystem.frx":AF58
+         TabPicture(3)   =   "frmPostSystem.frx":AF64
          Tab(3).ControlEnabled=   0   'False
          Tab(3).Control(0)=   "dgDetail4"
          Tab(3).ControlCount=   1
          TabCaption(4)   =   "ผู้ใช้(Users)"
-         TabPicture(4)   =   "frmPostSystem.frx":AF74
+         TabPicture(4)   =   "frmPostSystem.frx":AF80
          Tab(4).ControlEnabled=   0   'False
          Tab(4).Control(0)=   "dgDetail5"
          Tab(4).ControlCount=   1
