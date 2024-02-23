@@ -618,42 +618,42 @@ Call Save_Rec
 Unload Me
 End Sub
 
-
-
-Private Sub cmdLCust_Click()
-Call CustomerLookup("Y")
-End Sub
-
-Private Sub CustomerLookup(CallLookup As String)
-    LookupCondition = ""
-    ActiveLookup = "CUSTOMER" 'มีการกรอง ShareDept อยู่แล้ว
-    LookupRetVal = Trim(txtFld2.Text)
-
-    If CallLookup = "Y" Then 'เป็นตัวที่บอกว่าต้องการเรียกใช้ Looup หรือไม่
-            frmLookup.Show vbModal 'ถ้าไม่พบค่อยเรียก Lookup แล้วส่งค่า LookupRetVal กลับมาให้
-            If CancelLookup Then
-               txtfld1.SetFocus
-               Exit Sub
-            End If
-  End If
-  If LookupCondition = "" Then
-    FindCondition = "CSCODE = '" & Trim(LookupRetVal) & "'"
- Else
-    FindCondition = LookupCondition & " and CSCODE = '" & Trim(LookupRetVal) & "'"
- End If
-  Set rsTemp = New Adodb.Recordset
-  strCmdSQL = "select  *  from " & ActiveLookup & "  where " & FindCondition
-  rsTemp.Open strCmdSQL, dbActive, adOpenForwardOnly, adLockReadOnly, adCmdText
-  If Not rsTemp.EOF Then
-         txtfld1 = Trim(rsTemp!CsCode)
-         lblCSName = rsTemp!CSthiName
-  Else
-         lblCSName = ""
-  End If
-  rsTemp.Close
-  Set rsTemp = Nothing
-  
-  End Sub
+'
+'
+'Private Sub cmdLCust_Click()
+'Call CustomerLookup("Y")
+'End Sub
+'
+'Private Sub CustomerLookup(CallLookup As String)
+'    LookupCondition = ""
+'    ActiveLookup = "CUSTOMER" 'มีการกรอง ShareDept อยู่แล้ว
+'    LookupRetVal = Trim(txtFld2.Text)
+'
+'    If CallLookup = "Y" Then 'เป็นตัวที่บอกว่าต้องการเรียกใช้ Looup หรือไม่
+'            frmLookup.Show vbModal 'ถ้าไม่พบค่อยเรียก Lookup แล้วส่งค่า LookupRetVal กลับมาให้
+'            If CancelLookup Then
+'               txtfld1.SetFocus
+'               Exit Sub
+'            End If
+'  End If
+'  If LookupCondition = "" Then
+'    FindCondition = "CSCODE = '" & Trim(LookupRetVal) & "'"
+' Else
+'    FindCondition = LookupCondition & " and CSCODE = '" & Trim(LookupRetVal) & "'"
+' End If
+'  Set rsTemp = New Adodb.Recordset
+'  strCmdSQL = "select  *  from " & ActiveLookup & "  where " & FindCondition
+'  rsTemp.Open strCmdSQL, dbActive, adOpenForwardOnly, adLockReadOnly, adCmdText
+'  If Not rsTemp.EOF Then
+'         txtfld1 = Trim(rsTemp!CsCode)
+'         lblCSName = rsTemp!CSthiName
+'  Else
+'         lblCSName = ""
+'  End If
+'  rsTemp.Close
+'  Set rsTemp = Nothing
+'
+'  End Sub
 
 
 
@@ -719,13 +719,7 @@ With lblMovetxt
 End With
 End Sub
 
-Private Sub txtWKact_date_Validate(Cancel As Boolean)
-Cancel = Assign_DateToCtrl(txtWKact_date, dtpWKact_date)
-End Sub
 
-Private Sub txtfld2_Change()
-lblCSName.Caption = Find_Ret_Val("Customer", "CsName", "CSCode='" & Trim(txtFld2.Text) & "'")
-End Sub
 
 Private Sub txtSendType_Change()
 Call calRateAndservice

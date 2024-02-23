@@ -1209,9 +1209,9 @@ Private Sub lblTBActive_Change()
 End Sub
 
 
-Private Sub optAll_Click()
-Call GetData("")
-End Sub
+'Private Sub optAll_Click()
+'Call GetData("")
+'End Sub
 
 'Private Sub GetData(strWKType As String)
 '  Err_Desc = "" 'ทำการ Clear ให้เป็นว่างก่อน
@@ -1240,9 +1240,9 @@ End Sub
 'Call GetData("E")
 'End Sub
 
-Private Sub optInternal_Click()
-Call GetData("I")
-End Sub
+'Private Sub optInternal_Click()
+'Call GetData("I")
+'End Sub
 
 Private Sub stbDetail1_Click(PreviousTab As Integer)
 On Error Resume Next

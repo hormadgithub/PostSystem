@@ -399,7 +399,3 @@ With lblMovetxt
 End With
 End Sub
 
-Private Sub txtWKact_date_Validate(Cancel As Boolean)
-Cancel = Assign_DateToCtrl(txtWKact_date, dtpWKact_date)
-End Sub
-

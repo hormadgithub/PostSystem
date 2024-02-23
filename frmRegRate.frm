@@ -431,7 +431,7 @@ Err_Desc = "" 'กำหนดให้เป็นว่างก่อนเพื่อใช้ตรวจสอบทีหลังได้  Set dbActive = dbSQ
   Call Define_Field_Tag(Me, rsActive) 'ส่ง Form and Adodb.Recordset เพื่อกำหนด Data Source  maxlenght
   If mode = "ADD" Then
      txtfld1.Text = "0"
-     txtFld2.Text = "0"
+     txtfld2.Text = "0"
      txtregprice.Text = "0"
   End If
   txtfld1.Enabled = True
@@ -458,7 +458,4 @@ With lblMovetxt
 End With
 End Sub
 
-Private Sub txtWKact_date_Validate(Cancel As Boolean)
-Cancel = Assign_DateToCtrl(txtWKact_date, dtpWKact_date)
-End Sub
 

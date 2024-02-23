@@ -2919,84 +2919,84 @@ On Error Resume Next
                 .fraBrowse.Enabled = True
         End With
 End Sub
-
-Public Sub ActivateCommand(strMode As String, ByRef rsSend As Adodb.Recordset)
-        If (UCase(strMode) = "EDIT" Or UCase(strMode) = "DELETE") And (rsSend.RecordCount <> 0) Then
-                  With rsSend
-                           If .BOF Or .EOF Then
-                                    MsgBox "Please select record for edit !", vbInformation, "Error"
-                                    Exit Sub
-                           End If
-                  End With
-                
-                'ทำการหา Recode ที่ต้องทำการ Edit หรือ Delete
-                sKey = DGetKeyOfTable(tbActive)
-                If sKey <> "" Then
-                        SelectCondition = DGetKeyToSelect(tbActive, rsSend)
-                End If
-                Set rsActive = New Adodb.Recordset
-                With rsActive
-                         strCmdSQL = "select  *  From " & tbActive & "  where " & SelectCondition
-                        .Open strCmdSQL, dbActive, adOpenDynamic, adLockOptimistic, adCmdText
-                End With
-        End If
-        
-        Select Case UCase(strMode)
-        Case "ADD"
-                        Set rsActive = New Adodb.Recordset
-                        With rsActive 'คือ เลือกมาเป็นว่างก็ได้ในกรณี ADD
-                                strCmdSQL = "SELECT  *  FROM " & tbActive & "  WHERE 1<>1 "
-                                .Open strCmdSQL, dbActive, adOpenDynamic, adLockOptimistic, adCmdText
-                                .AddNew
-                        End With
-                        Call Define_Field_Tag(frmActive, rsActive)
-                        Call Disable_tbrCommand
-                        bAddRecord = False 'ถ้า Add สำเร็จจะมีค่าเป็น True
-        Case "EDIT"
-                         Call Define_Field_Tag(frmActive, rsActive)
-                          If rsSend.RecordCount <> 0 Then Call Disable_tbrCommand
-
-        Case "DELETE"
-                Dim rsClone As Adodb.Recordset
-                Set rsClone = rsSend.Clone 'ใช้การ Clone เพื่อไม่ให้เกิด RowColChange
-                If MsgBox("Are you sure delete  this record and all detail.  ?", vbCritical + vbOKCancel, "Delete Record") = vbOK Then
-                        With rsSend
-                                If .RecordCount <> 0 Then
-                                        'ให้ได้ตำแหน่งเดียวกับ rsSend
-                                        rsClone.Bookmark = .Bookmark
-                                        rsClone.MoveNext 'ให้ได้ Record ต่อไป
-                                        If Not rsClone.EOF Then
-                                           SelectCondition = DGetKeyToSelect(tbActive, rsClone) 'เอาเงื่อนไขในการกลับมาที่ต้องการ
-                                        Else
-                                           rsClone.Bookmark = .Bookmark 'เพื่อให้กลับมาที่เดิม
-                                           rsClone.MovePrevious 'ให้ได้ Record ก่อนหน้า
-                                           If Not rsClone.BOF Then
-                                               SelectCondition = DGetKeyToSelect(tbActive, rsClone) 'เอาเงื่อนไขในการกลับมาที่ต้องการ
-                                           End If
-                                        End If
-                                        rsClone.Close
-                                        Set rsClone = Nothing
-                                        With rsActive
-                                             .Delete  'ลบข้อมูลของ rsActive ตัว Main
-                                        End With 'End with rsactive
-                                        .Requery
-                                        sCriteria = SelectCondition
-                                        Call Multi_Find(rsSend, sCriteria)
-                                        'Call Refresh_Record(rsSend)
-                                End If
-                        End With
-                End If
-        Case "REFRESH"
-                 If rsSend.RecordCount <> 0 Then
-                        'เก็บค่าไว้ก่อนการ Requery
-                        SelectCondition = DGetKeyToSelect(tbActive, rsSend)
-                        rsSend.Requery
-                        sCriteria = SelectCondition
-                        Call Multi_Find(rsSend, sCriteria)
-                        'Call Refresh_Record(rsSend)
-                  End If
-        End Select
-End Sub
+'
+'Public Sub ActivateCommand(strMode As String, ByRef rsSend As Adodb.Recordset)
+'        If (UCase(strMode) = "EDIT" Or UCase(strMode) = "DELETE") And (rsSend.RecordCount <> 0) Then
+'                  With rsSend
+'                           If .BOF Or .EOF Then
+'                                    MsgBox "Please select record for edit !", vbInformation, "Error"
+'                                    Exit Sub
+'                           End If
+'                  End With
+'
+'                'ทำการหา Recode ที่ต้องทำการ Edit หรือ Delete
+'                sKey = DGetKeyOfTable(tbActive)
+'                If sKey <> "" Then
+'                        SelectCondition = DGetKeyToSelect(tbActive, rsSend)
+'                End If
+'                Set rsActive = New Adodb.Recordset
+'                With rsActive
+'                         strCmdSQL = "select  *  From " & tbActive & "  where " & SelectCondition
+'                        .Open strCmdSQL, dbActive, adOpenDynamic, adLockOptimistic, adCmdText
+'                End With
+'        End If
+'
+'        Select Case UCase(strMode)
+'        Case "ADD"
+'                        Set rsActive = New Adodb.Recordset
+'                        With rsActive 'คือ เลือกมาเป็นว่างก็ได้ในกรณี ADD
+'                                strCmdSQL = "SELECT  *  FROM " & tbActive & "  WHERE 1<>1 "
+'                                .Open strCmdSQL, dbActive, adOpenDynamic, adLockOptimistic, adCmdText
+'                                .AddNew
+'                        End With
+'                        Call Define_Field_Tag(frmActive, rsActive)
+'                        Call Disable_tbrCommand
+'                        bAddRecord = False 'ถ้า Add สำเร็จจะมีค่าเป็น True
+'        Case "EDIT"
+'                         Call Define_Field_Tag(frmActive, rsActive)
+'                          If rsSend.RecordCount <> 0 Then Call Disable_tbrCommand
+'
+'        Case "DELETE"
+'                Dim rsClone As Adodb.Recordset
+'                Set rsClone = rsSend.Clone 'ใช้การ Clone เพื่อไม่ให้เกิด RowColChange
+'                If MsgBox("Are you sure delete  this record and all detail.  ?", vbCritical + vbOKCancel, "Delete Record") = vbOK Then
+'                        With rsSend
+'                                If .RecordCount <> 0 Then
+'                                        'ให้ได้ตำแหน่งเดียวกับ rsSend
+'                                        rsClone.Bookmark = .Bookmark
+'                                        rsClone.MoveNext 'ให้ได้ Record ต่อไป
+'                                        If Not rsClone.EOF Then
+'                                           SelectCondition = DGetKeyToSelect(tbActive, rsClone) 'เอาเงื่อนไขในการกลับมาที่ต้องการ
+'                                        Else
+'                                           rsClone.Bookmark = .Bookmark 'เพื่อให้กลับมาที่เดิม
+'                                           rsClone.MovePrevious 'ให้ได้ Record ก่อนหน้า
+'                                           If Not rsClone.BOF Then
+'                                               SelectCondition = DGetKeyToSelect(tbActive, rsClone) 'เอาเงื่อนไขในการกลับมาที่ต้องการ
+'                                           End If
+'                                        End If
+'                                        rsClone.Close
+'                                        Set rsClone = Nothing
+'                                        With rsActive
+'                                             .Delete  'ลบข้อมูลของ rsActive ตัว Main
+'                                        End With 'End with rsactive
+'                                        .Requery
+'                                        sCriteria = SelectCondition
+'                                        Call Multi_Find(rsSend, sCriteria)
+'                                        'Call Refresh_Record(rsSend)
+'                                End If
+'                        End With
+'                End If
+'        Case "REFRESH"
+'                 If rsSend.RecordCount <> 0 Then
+'                        'เก็บค่าไว้ก่อนการ Requery
+'                        SelectCondition = DGetKeyToSelect(tbActive, rsSend)
+'                        rsSend.Requery
+'                        sCriteria = SelectCondition
+'                        Call Multi_Find(rsSend, sCriteria)
+'                        'Call Refresh_Record(rsSend)
+'                  End If
+'        End Select
+'End Sub
 
 
 
