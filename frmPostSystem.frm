@@ -356,7 +356,7 @@ Begin VB.Form frmPostSystem
       Height          =   705
       Left            =   -15
       TabIndex        =   1
-      Top             =   4620
+      Top             =   4605
       Width           =   12645
       _ExtentX        =   22304
       _ExtentY        =   1244
@@ -1374,7 +1374,7 @@ Dim ConnectionString As String
                                                                  
 
                                             .ReportFileName = RptPath & "rptInvoice.rpt"
-                                            .ParameterFields(1) = "เลขที่ Invoice;" & rsBrowse!invno & ";true"
+                                            .ParameterFields(0) = "Invno;" & rsBrowse!invno & ";True"
                                             .PrintReport
                                     End With
                                     Screen.MousePointer = vbDefault
