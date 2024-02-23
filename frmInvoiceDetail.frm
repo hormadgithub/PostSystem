@@ -64,7 +64,7 @@ Begin VB.Form frmInvoiceDetail
       TabIndex        =   0
       Top             =   930
       Width           =   6825
-      Begin VB.TextBox txttrackno 
+      Begin VB.TextBox txtTrackno 
          Height          =   345
          Left            =   1185
          TabIndex        =   26
@@ -672,7 +672,6 @@ sCond = "Invno='" & Trim(rsBrowse!invno) & "'"
              txtfld1.Text = rsTemp!invno
              txtInvDate.Text = rsTemp!invdate
              strCsCode = rsTemp!CsCode
-             txttrackno.Text = ""
        .Close
   End With
   Set rsTemp = Nothing
@@ -682,6 +681,7 @@ sCond = "Invno='" & Trim(rsBrowse!invno) & "'"
  If mode = "ADD" Then
     txtInvdt_Item.Text = max_Item("Invoicedetail", "invdt_item", sCond)
     txtSendType.Text = "EMS"
+    txtTrackno.Text = ""
 End If
 optEMS.Value = IIf(Trim(txtSendType.Text) = "EMS", True, False)
 optREG.Value = IIf(Trim(txtSendType.Text) = "REG", True, False)
