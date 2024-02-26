@@ -347,10 +347,7 @@ On Error Resume Next
           Set dbActive = New Adodb.Connection
           Set dbSQL = New Adodb.Connection
 
-        'strConnectionDB = "Driver={MySQL ODBC 3.51 Driver};Server=localhost;Database=PostSystem;user=root;Password=;"
-      '  strConnectionDB = "Driver={MySQL ODBC 3.51 Driver};Server=localhost;Database=PostSystem;user=Nittaya;Password=123;"
-        strConnectionDB = "Driver={MySQL ODBC 8.0 Unicode Driver};Server=localhost:3300;Database=Postdb;user=root;Password=;"
-        'strConnectionDB = "Driver={MySQL ODBC 5.1 Driver};Server=localhost;Database=PostSystem;user=Nittaya;Password=123;"
+        strConnectionDB = "Driver={MySQL ODBC 8.0 Unicode Driver};Server=localhost;Database=Postdb;user=root;Password=;"
 
         dbSQL.ConnectionString = strConnectionDB
         dbSQL.CursorLocation = adUseClient
@@ -2473,7 +2470,7 @@ On Error Resume Next
                                             DGetKeyToSelect = "INVNO='" & Trim(rsSend!invno) & "' and Invdt_item=" & Trim(rsSend!invdt_item)
                             Case "CUSTOMER"
                                             DGetKeyToSelect = "CSCODE='" & Trim(rsSend!CsCode) & "'"
-                            Case "EMSRATE", "REGSERVICE"
+                            Case "EMSRATE", "REGRATE"
                                             DGetKeyToSelect = "minweight=" & Trim(rsSend!minweight)
                             Case "USERS"
                                             DGetKeyToSelect = "userid='" & Trim(rsSend!userid) & "'"
