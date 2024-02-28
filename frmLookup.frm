@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{CDE57A40-8B86-11D0-B3C6-00A0C90AEA82}#1.0#0"; "MSDATGRD.OCX"
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
+Object = "{CDE57A40-8B86-11D0-B3C6-00A0C90AEA82}#1.0#0"; "MSDATGRD.OCX"
 Begin VB.Form frmLookup 
    BackColor       =   &H8000000A&
    BorderStyle     =   3  'Fixed Dialog
@@ -396,7 +396,7 @@ Dim FldOrder As String
 Dim SelOrder As String * 5
            If cmbOrder.ListIndex < 0 Then Exit Sub
            SelOrder = IIf(cmbOrder.ListIndex = 0, " ASC", " DESC")
-          FldOrder = Find_FldCode(cmbSort.Text, strTBName)
+          FldOrder = cmbSort.Text
           If rsLookup.RecordCount = 0 Or FldOrder = "" Then Exit Sub
           rsLookup.Sort = FldOrder & SelOrder
           'Call FindBfRecord
@@ -548,8 +548,9 @@ If Trim(txtSearch.Text) <> "" Then
             strTBName = ""
         End If
      '19/05/2010 santi ถ้ามีมากกว่า 1 ตัวเช่น Item ทำให้เกิด Error เนื่องจากโปรมแกรมจะค้นหาโดยเทียบกับ TbActive ซึ่งไม่ตรงกับ Table ที่ต้องการค้นหา
-     If FieldTypeNumeric(rsLookup, Find_FldCode(cmbSort.Text, strTBName)) Then  'ถ้าเป็นตัวเลขไม่ต้องมี Qute ค่อม
-        rsLookup.Find Find_FldCode(cmbSort.Text, strTBName) & " = " & txtSearch.Text
+     'If FieldTypeNumeric(rsLookup, cmbSort.Text) Then  'ถ้าเป็นตัวเลขไม่ต้องมี Qute ค่อม
+    If FieldTypeNumeric(rsLookup, cmbSort.Text) Then  'ถ้าเป็นตัวเลขไม่ต้องมี Qute ค่อม
+        rsLookup.Find cmbSort.Text & " = " & txtSearch.Text
      Else
         If UCase(ActiveLookup) <> "VW_MOVEMENT_PARTSERIALNODT" And Trim(cmbSort.Text) <> "" Then
             rsLookup.Find Find_FldCode(cmbSort.Text) & " like '" & txtSearch.Text & "%'"
@@ -557,7 +558,7 @@ If Trim(txtSearch.Text) <> "" Then
     End If
 End If
 dgMain.SetFocus
-frmmain.stbfrmmain.Panels("record").Text = "Record No :" & rsLookup.AbsolutePosition & "/" & rsLookup.RecordCount
+'frmMain.stbfrmmain.Panels("record").Text = "Record No :" & rsLookup.AbsolutePosition & "/" & rsLookup.RecordCount
 'กำหนดการแรียงลำดับ
       '13/03/2012 กำหนดการแรียงลำดับ
         If LookupOrderType <> "" Then
@@ -567,22 +568,23 @@ frmmain.stbfrmmain.Panels("record").Text = "Record No :" & rsLookup.AbsolutePosi
                 cmbOrder.ListIndex = 1
             End If
          Else
-            Select Case UCase(ActiveLookup)
-                         Case "VW_LOOKUP_OPORCVFORSHIPNOTE", "VW_LOOKUP_PACKING", "VW_LOOKUP_OPO", "VW_LOOKUP_QUOTATION"
-                                    cmbOrder.ListIndex = 1        'เรียงจากมากไปน้อย
-                         Case "PRICEREQUEST", "PRICEREQUESTDT", "VW_TRANSPORTS_VEHICLE" ', "VW_LOOKUP_OPODTFORPACKING"
-                                    cmbOrder.ListIndex = 0        'เรียงจากน้อยไปมาก
-                         Case Else 'ตรวจสอบว่าปกติ Table เรียงมากน้อยไปมากหรือไม่
-                                    If (Count_Record("AllTable", "TBName='" & ActiveLookup & "' And TBOrderByAsc = 'Y'") <> 0) Or UCase(ActiveLookup) = "PARTTUBE" Then
-                                        cmbOrder.ListIndex = 0    'เรียงจากน้อยไปมาก
-                                    Else
-                                        If InStr(1, UCase(dgMain.Columns(0).Caption), "ITEM") <> 0 Then
-                                                cmbOrder.ListIndex = 0    'เรียงจากน้อยไปมาก
-                                        Else
-                                             cmbOrder.ListIndex = 1    'เรียงจากมากไปน้อย
-                                        End If
-                                    End If
-            End Select
+            cmbOrder.ListIndex = 0    'เรียงจากน้อยไปมาก
+'            Select Case UCase(ActiveLookup)
+'                         Case "VW_LOOKUP_OPORCVFORSHIPNOTE", "VW_LOOKUP_PACKING", "VW_LOOKUP_OPO", "VW_LOOKUP_QUOTATION"
+'                                    cmbOrder.ListIndex = 1        'เรียงจากมากไปน้อย
+'                         Case "PRICEREQUEST", "PRICEREQUESTDT", "VW_TRANSPORTS_VEHICLE" ', "VW_LOOKUP_OPODTFORPACKING"
+'                                    cmbOrder.ListIndex = 0        'เรียงจากน้อยไปมาก
+'                         Case Else 'ตรวจสอบว่าปกติ Table เรียงมากน้อยไปมากหรือไม่
+'                                    If (Count_Record("AllTable", "TBName='" & ActiveLookup & "' And TBOrderByAsc = 'Y'") <> 0) Or UCase(ActiveLookup) = "PARTTUBE" Then
+'                                        cmbOrder.ListIndex = 0    'เรียงจากน้อยไปมาก
+'                                    Else
+'                                        If InStr(1, UCase(dgMain.Columns(0).Caption), "ITEM") <> 0 Then
+'                                                cmbOrder.ListIndex = 0    'เรียงจากน้อยไปมาก
+'                                        Else
+'                                             cmbOrder.ListIndex = 1    'เรียงจากมากไปน้อย
+'                                        End If
+'                                    End If
+'            End Select
     End If
     txtSearch.SetFocus
 End Sub
@@ -595,22 +597,22 @@ Err_Desc = "" 'กำหนดให้เป็นว่างก่อนเพื่อใช้ตรวจสอบทีหลังได้
         If LookupCondition = "" Then LookupCondition = "1=1"
         StrFld = "" 'กำหนดให้เป็นว่างไว้ก่อน
         StrJoinTable = ""
-        If Left(UCase(ActiveLookup), 2) <> "VW" And Left(UCase(ActiveLookup), 4) <> "VIEW" Then 'แสดงว่าไม่ได้มาจาก View
-                'เอา TBShowField จาก   AllTable  มาใส่ให้กับตัวแปร strFld สำหรับแสดงตอน Brows
-                Set rsLookup = New Adodb.Recordset
-                With rsLookup
-                        strCmdSQL = "SELECT  *  FROM Alltable  WHERE TBName= '" & Trim(UCase(ActiveLookup)) & "'"
-                        .Open strCmdSQL, dbActive, adOpenForwardOnly, adLockReadOnly, adCmdText
-                        If Not .BOF Or Not .EOF Then
-                                StrFld = rsLookup!TBShowField
-                                cmbIndex = CInt(rsLookup!TBcmbOrderIndex)
-                        Else
-                                StrFld = ""
-                        End If
-                        .Close
-                 End With
-                 Set rsLookup = Nothing
-        End If
+'        If Left(UCase(ActiveLookup), 2) <> "VW" And Left(UCase(ActiveLookup), 4) <> "VIEW" Then 'แสดงว่าไม่ได้มาจาก View
+'                'เอา TBShowField จาก   AllTable  มาใส่ให้กับตัวแปร strFld สำหรับแสดงตอน Brows
+'                Set rsLookup = New Adodb.Recordset
+'                With rsLookup
+'                        strCmdSQL = "SELECT  *  FROM Alltable  WHERE TBName= '" & Trim(UCase(ActiveLookup)) & "'"
+'                        .Open strCmdSQL, dbActive, adOpenForwardOnly, adLockReadOnly, adCmdText
+'                        If Not .BOF Or Not .EOF Then
+'                                StrFld = rsLookup!TBShowField
+'                                cmbIndex = CInt(rsLookup!TBcmbOrderIndex)
+'                        Else
+'                                StrFld = ""
+'                        End If
+'                        .Close
+'                 End With
+'                 Set rsLookup = Nothing
+'        End If
         If Trim$(StrFld) = "" Then StrFld = "*"
         Set rsLookup = New Adodb.Recordset
         With rsLookup
@@ -628,16 +630,16 @@ Err_Desc = "" 'กำหนดให้เป็นว่างก่อนเพื่อใช้ตรวจสอบทีหลังได้
 
         txtSearch.Text = LookupRetVal
 
-        If Left(UCase(ActiveLookup), 2) <> "VW" And Left(UCase(ActiveLookup), 4) <> "VIEW" Then  'แสดงว่าไม่ได้มาจาก View
-           If UCase(ActiveLookup) = "PARTTUBE" Then
-              cmbSort.ListIndex = 2 'Real_OH
-           Else
-            cmbSort.ListIndex = cmbIndex 'ได้ค่ามาจากการกำหนดที่ All Table
-           End If
-        Else
-            '30-10-2018 ต้องการให้เรียงลำดับตาม View
-           If UCase(ActiveLookup) <> "VW_MOVEMENT_PARTSERIALNODT" Then cmbSort.ListIndex = 0
-        End If
+'        If Left(UCase(ActiveLookup), 2) <> "VW" And Left(UCase(ActiveLookup), 4) <> "VIEW" Then  'แสดงว่าไม่ได้มาจาก View
+'           If UCase(ActiveLookup) = "PARTTUBE" Then
+'              cmbSort.ListIndex = 2 'Real_OH
+'           Else
+'            cmbSort.ListIndex = cmbIndex 'ได้ค่ามาจากการกำหนดที่ All Table
+'           End If
+'        Else
+'            '30-10-2018 ต้องการให้เรียงลำดับตาม View
+'           If UCase(ActiveLookup) <> "VW_MOVEMENT_PARTSERIALNODT" Then cmbSort.ListIndex = 0
+'        End If
         cmbCndt.ListIndex = 0
 
         If Trim(LookupTitle) = "" Then
@@ -647,15 +649,18 @@ Err_Desc = "" 'กำหนดให้เป็นว่างก่อนเพื่อใช้ตรวจสอบทีหลังได้
         End If
                 
         '13/03/2012 ถ้ามีการกำหนด Field ในการเรียงลำดับ
-        If LookupOrderField <> "" Then
-           Dim strOrderField As String
-           strOrderField = Find_FldDesc(LookupOrderField)
-           For i = 0 To cmbSort.ListCount
-                     cmbSort.ListIndex = i
-                  If UCase(strOrderField) = UCase(cmbSort.Text) Then Exit For
-           Next
-        End If
+'        If LookupOrderField <> "" Then
+'           Dim strOrderField As String
+'           strOrderField = Find_FldDesc(LookupOrderField)
+'           For i = 0 To cmbSort.ListCount
+'                     cmbSort.ListIndex = i
+'                  If UCase(strOrderField) = UCase(cmbSort.Text) Then Exit For
+'           Next
+'        End If
         
+
+    cmbSort.ListIndex = 0
+
       '13/03/2012 กำหนดการแรียงลำดับ
         If LookupOrderType <> "" Then
             If UCase$(LookupOrderType) = "ASC" Then
@@ -685,7 +690,7 @@ Dim FldName As String
 
 On Error GoTo err_rec:
     With rsLookup
-    FldName = Trim(Find_FldCode(cmbSort.Text, ActiveLookup))
+    FldName = Trim(cmbSort.Text)   'Trim(Find_FldCode(cmbSort.Text, ActiveLookup))
     If txtSearch.Text <> "" And .RecordCount <> 0 Then
           SavRec = .AbsolutePosition
           .MoveFirst

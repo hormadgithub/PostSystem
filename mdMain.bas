@@ -71,6 +71,10 @@ Public ColName As String
 Public strSort As String 'เรียงลำดับ ASC OR DESC
 Public savFrmActive As Form
 
+Public LookupOrderField As String
+Public LookupOrderType As String
+
+
 Public savTBName As String
 Public savColname  As String
 
@@ -243,7 +247,7 @@ Public tbActive As String
 Public tbActual As String 'Table ที่มีอยู่จริงไม่ใช่ Table ที่ใช้ View
 Public tbActualPrevious As String 'Table ก่อนหน้า
 
-Public fldOrder As String
+Public FldOrder As String
 Public CurrentTable As String
 Public bBrowseState As Boolean
 Public dgMainCaption As String
@@ -389,6 +393,36 @@ Dim intService As Integer
         End If
         fn_GetService = intService
 End Function
+
+
+Public Sub Test_StoreProc()
+Dim Err_Desc As String
+        
+        Set cmdSp = New Command
+        With cmdSp
+                  .ActiveConnection = dbActive
+                  
+                .CommandType = adCmdStoredProc
+                .CommandText = "Test_StoreProc"
+
+                .Parameters.Append cmdSp.CreateParameter("Err_Desc", adVarChar, adParamOutput, 500)
+                .Execute
+
+                 If IsNull(cmdSp.Parameters("Err_Desc").Value) Then
+                    Err_Desc = "Syntax Error   ( " & .CommandText & ")"
+                 Else
+                    Err_Desc = cmdSp.Parameters("Err_Desc").Value
+                End If
+         End With
+
+         Set cmdSp = Nothing
+    If Trim(Err_Desc) <> "" Then
+         MsgBox ShowErrMsg & vbCrLf & Trim(Err_Desc) & _
+                          vbCrLf & "กรุณาแจ้ง MIS ให้มาดู Error นี้ก่อน. click OK นะครับ", vbCritical, "แจ้ง MIS ด่วน."
+    End If
+
+End Sub
+
 
 '
 'Public Sub AssingConstantVar()
@@ -1076,28 +1110,28 @@ Public Function FindListindex(RefValue As String, _
 End Function
 
 Public Function Find_FldDesc(fldCode As String) As String
-  Set rsFunction = New Adodb.Recordset
-  strCmdSQL = "select  flddesc  from fldhdrtb where fldcode = '" & fldCode & "'"
-  rsFunction.Open strCmdSQL, dbSQL, adOpenDynamic, adLockOptimistic, adCmdText
-  If Not rsFunction.EOF Then
-     Find_FldDesc = Trim$(CStr(rsFunction!flddesc))
-  Else
+'  Set rsFunction = New Adodb.Recordset
+'  strCmdSQL = "select  flddesc  from fldhdrtb where fldcode = '" & fldCode & "'"
+'  rsFunction.Open strCmdSQL, dbSQL, adOpenDynamic, adLockOptimistic, adCmdText
+'  If Not rsFunction.EOF Then
+'     Find_FldDesc = Trim$(CStr(rsFunction!flddesc))
+'  Else
      Find_FldDesc = Trim$(CStr(fldCode))
-  End If
-  Set rsFunction = Nothing
+'  End If
+'  Set rsFunction = Nothing
 End Function
 
 'กำหนดความกว้างของ Colum ใน DataGrid
 Public Function Find_FldColWidth(fldCode As String) As Integer
-  Set rsFunction = New Adodb.Recordset
-  strCmdSQL = "select  fldcolwidth  from fldhdrtb where fldcode = '" & fldCode & "'"
-  rsFunction.Open strCmdSQL, dbSQL, adOpenDynamic, adLockOptimistic, adCmdText
-  If Not rsFunction.EOF Then
-     Find_FldColWidth = rsFunction!fldColWidth * 100
-  Else
+'  Set rsFunction = New Adodb.Recordset
+'  strCmdSQL = "select  fldcolwidth  from fldhdrtb where fldcode = '" & fldCode & "'"
+'  rsFunction.Open strCmdSQL, dbSQL, adOpenDynamic, adLockOptimistic, adCmdText
+'  If Not rsFunction.EOF Then
+'     Find_FldColWidth = rsFunction!fldColWidth * 100
+'  Else
      Find_FldColWidth = 0
-  End If
-  Set rsFunction = Nothing
+'  End If
+'  Set rsFunction = Nothing
 End Function
 
 Public Function Find_PositionInTB(TableName As String, Condition As String, FieldOrder As String, Criteria As String) As Double
@@ -1125,14 +1159,14 @@ Public Function Find_FldCode(flddesc As String) As String
   Dim strTBName As String
   Dim cntrec As Integer
  strTBName = tbActive
- cntrec = Count_Record("FldHdrTB", "flddesc = '" & flddesc & "'")
-If cntrec >= 2 Then 'ถ้าซ้ำกันต้องระบุ Table
-    Find_FldCode = Find_Ret_Val("FldHdrTB", "fldcode", "flddesc = '" & flddesc & "' and TBName='" & strTBName & "'")
-ElseIf cntrec = 1 Then
-      Find_FldCode = Find_Ret_Val("FldHdrTB", "fldcode", "flddesc = '" & flddesc & "'")
-Else
+' cntrec = Count_Record("FldHdrTB", "flddesc = '" & flddesc & "'")
+'If cntrec >= 2 Then 'ถ้าซ้ำกันต้องระบุ Table
+'    Find_FldCode = Find_Ret_Val("FldHdrTB", "fldcode", "flddesc = '" & flddesc & "' and TBName='" & strTBName & "'")
+'ElseIf cntrec = 1 Then
+'      Find_FldCode = Find_Ret_Val("FldHdrTB", "fldcode", "flddesc = '" & flddesc & "'")
+'Else
    Find_FldCode = Trim$(CStr(flddesc))
-End If
+'End If
 
 
 '  Set rsFunction = New Adodb.Recordset
@@ -1348,7 +1382,7 @@ Public Sub AddDataToList(TBname As String, _
                                                   fldName1 As String, _
                                                   fldName2 As String, _
                                                   Condition As String, _
-                                                  fldOrder As String, _
+                                                  FldOrder As String, _
                                                   SortType As String, _
                                                   CtrlList As Control, _
                                                   Distinct As Boolean)
@@ -1369,8 +1403,8 @@ Public Sub AddDataToList(TBname As String, _
                 strCmdSQL = strCmdSQL & " WHERE " & Condition
         End If
         
-        If Trim(fldOrder) <> "" Then
-                strCmdSQL = strCmdSQL & " ORDER BY " & fldOrder & " " & SortType
+        If Trim(FldOrder) <> "" Then
+                strCmdSQL = strCmdSQL & " ORDER BY " & FldOrder & " " & SortType
         End If
         
         'Check TB month
@@ -1411,7 +1445,7 @@ Public Sub AddItemToCtrl(TBname As String, _
                                                   fldName1 As String, _
                                                   fldName2 As String, _
                                                   Condition As String, _
-                                                  fldOrder As String, _
+                                                  FldOrder As String, _
                                                   SortType As String, _
                                                   CtrlList As Control, _
                                                   Distinct As Boolean, _
@@ -1433,8 +1467,8 @@ Public Sub AddItemToCtrl(TBname As String, _
                 strCmdSQL = strCmdSQL & " WHERE " & Condition
         End If
         
-        If Trim(fldOrder) <> "" Then
-                strCmdSQL = strCmdSQL & " ORDER BY " & fldOrder & " " & SortType
+        If Trim(FldOrder) <> "" Then
+                strCmdSQL = strCmdSQL & " ORDER BY " & FldOrder & " " & SortType
         End If
         
         'Check TB month
@@ -1601,13 +1635,13 @@ Public Sub Frm_Protect() 'ป้องกันไม่ให้แก้ไข frmOPO
 End Sub
 
 
-Public Sub FindList_2Condition(TBname As String, fldWhere As String, ctrlWhere As Control, fldOrder As String, fldFind As String, ctrlFind As Control, CtrlList As Control)
+Public Sub FindList_2Condition(TBname As String, fldWhere As String, ctrlWhere As Control, FldOrder As String, fldFind As String, ctrlFind As Control, CtrlList As Control)
 'ใช้ค้นหาค่า Listindex ของ ComboBox
 'เป็น Procedure ที่ใช้ Search ค่า ListIndex, โดยค้นหาจาก fldWhere ที่มีค่า = ctrlText ที่มี Properties "Text"
     Dim strCriteria As String
     If Len(ctrlWhere.Text) <> "" Then
         Set rsFunction = New Adodb.Recordset
-        strCmdSQL = "SELECT * FROM " & TBname & " WHERE " & fldWhere & " = '" & Trim$(ctrlWhere.Text) & "' ORDER BY " & fldOrder
+        strCmdSQL = "SELECT * FROM " & TBname & " WHERE " & fldWhere & " = '" & Trim$(ctrlWhere.Text) & "' ORDER BY " & FldOrder
         rsFunction.Open strCmdSQL, dbActive, adOpenDynamic, adLockOptimistic, adCmdText
         With rsFunction
             strCriteria = fldFind & " = '" & Trim$(ctrlFind.Text) & "'"
@@ -1670,11 +1704,11 @@ Dim i As Integer
     i = 0
     For Each fields In rs.fields
                 'กำหนด Header เป็น ภาษาไทย
-                FldName = Find_FldDesc(rs.fields(i).Name)
+                FldName = rs.fields(i).Name 'Find_FldDesc(rs.fields(i).Name)
                 dg.Columns(i).Caption = FldName
                 cmb.AddItem FldName
-                'ความกว้าง Colum  ถ้าเท่ากับ 0 ไม่ต้องทำอะไร
-                If Find_FldColWidth(rs.fields(i).Name) <> 0 Then dg.Columns(i).Width = Find_FldColWidth(rs.fields(i).Name)
+'                'ความกว้าง Colum  ถ้าเท่ากับ 0 ไม่ต้องทำอะไร
+'                If Find_FldColWidth(rs.fields(i).Name) <> 0 Then dg.Columns(i).Width = Find_FldColWidth(rs.fields(i).Name)
                 i = i + 1
     Next
 End Sub
@@ -4035,3 +4069,16 @@ Public Sub OpenPDF(strFileName As String, frmSend As Form)
     End If
 End Sub
 '=============== End Open Pdf FIle =======================
+
+
+
+Public Function LookupCustomer(Condition) As String
+       
+        If Condition = "" Then LookupCondition = "1=1"
+        LookupCondition = Condition
+        ActiveLookup = "Customer"
+        LookupRetVal = ""
+        frmLookup.Show vbModal
+        LookupCustomer = Trim(LookupRetVal)
+        
+End Function

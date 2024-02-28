@@ -65,6 +65,25 @@ Begin VB.Form frmInvoice
       TabIndex        =   0
       Top             =   915
       Width           =   6825
+      Begin VB.CommandButton cmdCScode 
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Left            =   2595
+         Picture         =   "frmInvoice.frx":030A
+         Style           =   1  'Graphical
+         TabIndex        =   14
+         TabStop         =   0   'False
+         Top             =   810
+         Width           =   515
+      End
       Begin VB.TextBox txtCSCode 
          BeginProperty Font 
             Name            =   "Tahoma"
@@ -148,7 +167,7 @@ Begin VB.Form frmInvoice
          EndProperty
          CalendarBackColor=   -2147483624
          CustomFormat    =   "dd/mm/yyyy"
-         Format          =   156106753
+         Format          =   154992641
          CurrentDate     =   36949
       End
       Begin VB.Label lblCSName 
@@ -268,15 +287,15 @@ Begin VB.Form frmInvoice
          BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
             NumListImages   =   3
             BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmInvoice.frx":030A
+               Picture         =   "frmInvoice.frx":0748
                Key             =   ""
             EndProperty
             BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmInvoice.frx":0BE4
+               Picture         =   "frmInvoice.frx":1022
                Key             =   ""
             EndProperty
             BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmInvoice.frx":14BE
+               Picture         =   "frmInvoice.frx":18FC
                Key             =   ""
             EndProperty
          EndProperty
@@ -294,15 +313,15 @@ Begin VB.Form frmInvoice
          BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
             NumListImages   =   3
             BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmInvoice.frx":1D98
+               Picture         =   "frmInvoice.frx":21D6
                Key             =   ""
             EndProperty
             BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmInvoice.frx":20B2
+               Picture         =   "frmInvoice.frx":24F0
                Key             =   ""
             EndProperty
             BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmInvoice.frx":298C
+               Picture         =   "frmInvoice.frx":2DCA
                Key             =   ""
             EndProperty
          EndProperty
@@ -320,15 +339,15 @@ Begin VB.Form frmInvoice
          BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
             NumListImages   =   3
             BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmInvoice.frx":3266
+               Picture         =   "frmInvoice.frx":36A4
                Key             =   ""
             EndProperty
             BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmInvoice.frx":3580
+               Picture         =   "frmInvoice.frx":39BE
                Key             =   ""
             EndProperty
             BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmInvoice.frx":389A
+               Picture         =   "frmInvoice.frx":3CD8
                Key             =   ""
             EndProperty
          EndProperty
@@ -360,7 +379,7 @@ Begin VB.Form frmInvoice
    Begin VB.Image Image4 
       Height          =   615
       Left            =   0
-      Picture         =   "frmInvoice.frx":4174
+      Picture         =   "frmInvoice.frx":45B2
       Stretch         =   -1  'True
       Top             =   0
       Width           =   6825
@@ -385,6 +404,10 @@ End If
 If MsgBox("Are you Sure Save this record ?", vbInformation + vbOKCancel, "Save Record") = vbCancel Then Exit Sub
 Call Save_Rec
 Unload Me
+End Sub
+
+Private Sub cmdCScode_Click()
+        txtCSCode = LookupCustomer("")
 End Sub
 
 '

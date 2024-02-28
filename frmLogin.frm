@@ -76,6 +76,8 @@ Public conn As New Adodb.Connection
 
 
 Private Sub cmdLogin_Click()
+Call Test_StoreProc
+
 If Count_Record("users", "userid='" & Trim(txtUserID.Text) & "'") = 0 Then
      MsgBox "User Not Found", vbCritical, "Try again"
 Else
