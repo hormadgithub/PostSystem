@@ -76,18 +76,47 @@ Public conn As New Adodb.Connection
 
 
 Private Sub cmdLogin_Click()
-Call Test_StoreProc
+'call Test_StoreProc
+Dim strResult As String
+    Set cmdSp = New Command
+    With cmdSp
+              .ActiveConnection = dbActive
+              
+            .CommandType = adCmdStoredProc
+            .CommandText = "check_login"
 
-If Count_Record("users", "userid='" & Trim(txtUserID.Text) & "'") = 0 Then
-     MsgBox "User Not Found", vbCritical, "Try again"
-Else
-     If Count_Record("users", "userid='" & Trim(txtUserID.Text) & "' and password='" & Trim(txtPassword.Text) & "'") <> 0 Then
-            UsrSTFCode = Trim(txtUserID.Text)
-           frmPostSystem.Show vbModal
-    Else
-            MsgBox "Wrong Password", vbCritical, "Try again"
+            .Parameters.Append cmdSp.CreateParameter("struserid", adChar, adParamInput, 10)
+            .Parameters("struserid").Value = Trim(txtUserID.Text)
+
+
+            .Parameters.Append cmdSp.CreateParameter("strpassword", adChar, adParamInput, 15)
+            .Parameters("strpassword").Value = Trim(txtPassword.Text)
+
+            .Parameters.Append cmdSp.CreateParameter("strResult", adVarChar, adParamOutput, 50)
+            .Execute
+
+               strResult = cmdSp.Parameters("strResult").Value
+     End With
+
+     Set cmdSp = Nothing
+    If UCase(Trim(strResult)) = "FOUND" Then
+                UsrSTFCode = Trim(txtUserID.Text)
+               frmPostSystem.Show vbModal
+        Else
+                MsgBox strResult, vbCritical, "Try again"
     End If
-End If
+
+
+'If Count_Record("users", "userid='" & Trim(txtUserID.Text) & "'") = 0 Then
+'     MsgBox "User Not Found", vbCritical, "Try again"
+'Else
+'     If Count_Record("users", "userid='" & Trim(txtUserID.Text) & "' and password='" & Trim(txtPassword.Text) & "'") <> 0 Then
+'            UsrSTFCode = Trim(txtUserID.Text)
+'           frmPostSystem.Show vbModal
+'    Else
+'            MsgBox "Wrong Password", vbCritical, "Try again"
+'    End If
+'End If
 End Sub
 
 Private Sub Form_Load()
