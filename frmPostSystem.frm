@@ -615,21 +615,20 @@ Begin VB.Form frmPostSystem
          _ExtentY        =   6033
          _Version        =   393216
          Tabs            =   5
-         Tab             =   1
          TabsPerRow      =   5
          TabHeight       =   520
          BackColor       =   -2147483626
          ForeColor       =   8388608
          TabCaption(0)   =   "รายการ"
          TabPicture(0)   =   "frmPostSystem.frx":AF10
-         Tab(0).ControlEnabled=   0   'False
+         Tab(0).ControlEnabled=   -1  'True
          Tab(0).Control(0)=   "dgDetail1"
+         Tab(0).Control(0).Enabled=   0   'False
          Tab(0).ControlCount=   1
          TabCaption(1)   =   "ลูกค้า"
          TabPicture(1)   =   "frmPostSystem.frx":AF2C
-         Tab(1).ControlEnabled=   -1  'True
+         Tab(1).ControlEnabled=   0   'False
          Tab(1).Control(0)=   "dgDetail2"
-         Tab(1).Control(0).Enabled=   0   'False
          Tab(1).ControlCount=   1
          TabCaption(2)   =   "---EMS---"
          TabPicture(2)   =   "frmPostSystem.frx":AF48
@@ -648,7 +647,7 @@ Begin VB.Form frmPostSystem
          Tab(4).ControlCount=   1
          Begin MSDataGridLib.DataGrid dgDetail1 
             Height          =   3000
-            Left            =   -74985
+            Left            =   15
             TabIndex        =   18
             Top             =   315
             Width           =   12525
@@ -715,7 +714,7 @@ Begin VB.Form frmPostSystem
          End
          Begin MSDataGridLib.DataGrid dgDetail2 
             Height          =   3045
-            Left            =   0
+            Left            =   -75000
             TabIndex        =   19
             Top             =   330
             Width           =   12495
@@ -1028,7 +1027,7 @@ Private Sub Form_Load()
                 
                  Set rsBrowse = New Adodb.Recordset
                 With rsBrowse
-                            strCmdSQL = "select  *  From invoice "
+                            strCmdSQL = "select  *  From vw_invoice "
                           .Open strCmdSQL, dbActive, adOpenForwardOnly, adLockOptimistic, adCmdText
                 End With
                 Set dgMain.DataSource = rsBrowse
