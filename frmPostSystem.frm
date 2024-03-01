@@ -1292,6 +1292,8 @@ End Sub
 
 
 Private Sub dgMain_RowColChange(LastRow As Variant, ByVal LastCol As Integer)
+        'ถ้ามีการแก้ไข Invoice Detail มีการเปลี่ยนจำนวนเงิน ให้ทำการ Refresh ให้ด้วย แต่ Record ต้องอยู่ที่เดิน
+        If Trim(UCase(tbActive)) <> "INVOICE" Then Exit Sub
         Call Set_Button(rsBrowse)
         Call RowColChg
         Call BrowseDetail1(True)
@@ -1302,10 +1304,11 @@ Private Sub BrowseDetail1(blnClose As Boolean)
 On Error Resume Next
         With frmActive
                   If Not rsBrowse.EOF Then
-                      strCondition = " INVNo='" & Trim(rsBrowse!invno) & "'"
+                      strCondition = " INVNo='" & Trim(rsBrowse!Invno) & "'"
                   Else
                       strCondition = "1<>1"
                   End If
+
                   'BrowseDetail1
                   strCmdSQL = Find_strCmdSQLForBrowse("INVOICEDETAIL")
                   If blnClose Then rsBrowse1.Close
@@ -1370,11 +1373,12 @@ Dim ConnectionString As String
                                             '.LogOnServer "PDSODBC.DLL", "PostSystem", "PostSystem", "Nittaya", "123"
                                            ' .Connect = "DRIVER={MySQL ODBC 3.51 Driver};SERVER=localhost;DATABASE=PostSystem;UID=Nittaya;PWD=1233"
 
-                                            .Connect = "Driver={MySQL ODBC 8.0 Unicode Driver};Server=localhost:3300;Database=Postdb;user=root;Password=;"
+                                            '.Connect = "Driver={MySQL ODBC 8.0 Unicode Driver};Server=localhost:3300;Database=Postdb;user=root;Password=;"
+                                            .Connect = "Driver={MySQL ODBC 8.0 Unicode Driver};Server=localhost;Database=Postdb;user=root;Password=;"
                                                                  
 
                                             .ReportFileName = RptPath & "rptInvoice.rpt"
-                                            .ParameterFields(0) = "Invno;" & rsBrowse!invno & ";True"
+                                            .ParameterFields(0) = "Invno;" & rsBrowse!Invno & ";True"
                                             .PrintReport
                                     End With
                                     Screen.MousePointer = vbDefault
@@ -1389,8 +1393,6 @@ Dim ConnectionString As String
                               End If
                             Exit Sub
         End Select
-        
-        
         Select Case UCase(tbActive)
                       Case "INVOICE"
                                  Set frmActive = frmInvoice
@@ -1401,6 +1403,10 @@ Dim ConnectionString As String
                       Case "INVOICEDETAIL"
                                  Set frmActive = frmInvoiceDetail
                                  Call ActivateCommand_OldForm(mode, rsBrowse1, Me)
+                                SelectCondition = "Invno='" & Trim(rsBrowse!Invno) & "'"
+                                rsBrowse.Requery
+                                sCriteria = SelectCondition
+                                Call Multi_Find(rsBrowse, sCriteria)
 
                       Case "CUSTOMER"
                                  Set frmActive = frmCustomer
@@ -1416,9 +1422,9 @@ Dim ConnectionString As String
                                  Call ActivateCommand_OldForm(mode, rsBrowse5, Me)
                 End Select
 
-
-
 End Sub
+
+
 
 Private Sub txtFindValue_Change()
         If Trim(txtFindValue) = "" Then Exit Sub

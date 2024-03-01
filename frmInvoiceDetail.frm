@@ -664,12 +664,12 @@ Err_Desc = "" 'กำหนดให้เป็นว่างก่อนเพื่อใช้ตรวจสอบทีหลังได้  Set dbActive = dbSQ
 
   blnLoadcomplete = False
   Call Define_Field_Tag(Me, rsActive) 'ส่ง Form and Adodb.Recordset เพื่อกำหนด Data Source  maxlenght
-sCond = "Invno='" & Trim(rsBrowse!invno) & "'"
+sCond = "Invno='" & Trim(rsBrowse!Invno) & "'"
  Set rsTemp = New Adodb.Recordset
  With rsTemp
         strCmdSQL = "select *  From Invoice  where  " & sCond
         .Open strCmdSQL, dbActive, adOpenForwardOnly, adLockReadOnly, adCmdText
-             txtfld1.Text = rsTemp!invno
+             txtfld1.Text = rsTemp!Invno
              txtInvDate.Text = rsTemp!invdate
              strCsCode = rsTemp!CsCode
        .Close
